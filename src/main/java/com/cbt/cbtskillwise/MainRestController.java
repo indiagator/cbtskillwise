@@ -1,9 +1,17 @@
 package com.cbt.cbtskillwise;
 
+import jakarta.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpHeaders;
+import java.net.http.HttpRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/1.1")
@@ -18,6 +26,42 @@ public class MainRestController
 
     @Autowired
     UserdetailService userdetailService;
+
+
+    @GetMapping("login")
+    public ResponseEntity<String> generateToken(@RequestBody Credential credential )
+    {
+        StringBuilder token = new StringBuilder();
+        token.append(credential.getUsername());
+        token.append(credential.getPassword());
+
+        return new ResponseEntity<String>(String.valueOf(token),HttpStatus.OK);
+
+    }
+
+    @GetMapping("auth")
+    public ResponseEntity<String> auth(@RequestHeader("Authorization") String bearerToken)
+    {
+        //Map<String,List<String>> headersMap =  headers.map();
+
+       // String resValue = "";
+
+        //for(Map.Entry<String,List<String>> entry: headersMap.entrySet()  )
+       // {
+         //   if(entry.getKey().equalsIgnoreCase("Authorization"))
+         //  {
+          //      List<String> authValues = entry.getValue();
+
+          //      resValue= authValues.get(0); // We need to check whether this is a Authentic Bearer Token
+          //  }
+        //}
+
+       // Map<String,String> resBody = new HashMap<>();
+       // resBody.put("message",resValue);
+        return new ResponseEntity<String>(bearerToken,HttpStatus.OK);
+
+
+    }
 
     @PostMapping("signup")
     public ResponseMessage signup(@RequestBody Credential credential) // 'C' rest endpoint for ENTITY: CREDENTIAL

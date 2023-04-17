@@ -1,6 +1,9 @@
 package com.cbt.cbtskillwise;
 
 import jakarta.servlet.ServletRequest;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +45,10 @@ public class MainRestController
     @GetMapping("auth")
     public ResponseEntity<String> auth(@RequestHeader("Authorization") String bearerToken)
     {
+
+         Logger logger =  LogManager.getLogger(MainRestController.class);
+         logger.info("Auth Token Received");
+
         //Map<String,List<String>> headersMap =  headers.map();
 
        // String resValue = "";
